@@ -91,6 +91,18 @@ async def healthz() -> dict:
     return {"ok": True}
 
 
+@app.get("/health", tags=["meta"])
+async def health() -> dict:
+    """SnapDeploy / Railway 等 PaaS 健康检查路径。"""
+    return {"status": "ok"}
+
+
+@app.get("/actuator/health", tags=["meta"])
+async def actuator_health() -> dict:
+    """部分 PaaS 会用这个路径做健康检查。"""
+    return {"status": "UP"}
+
+
 @app.get("/proxy", response_model=ProxyResponse, tags=["proxy"])
 async def proxy_url(
     url: str = Query(..., description="目标 URL，需要 http:// 或 https:// 前缀"),
