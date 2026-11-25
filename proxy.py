@@ -104,8 +104,7 @@ async def proxy_url(
 
     try:
         async with httpx.AsyncClient(
-            connect_timeout=CONNECT_TIMEOUT,
-            read_timeout=read_timeout,
+            timeout=httpx.Timeout(connect=CONNECT_TIMEOUT, read=read_timeout),
             follow_redirects=True,
             max_redirects=5,
             headers=headers,
